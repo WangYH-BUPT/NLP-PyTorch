@@ -1,2 +1,2 @@
 # NLP-Python
-some projects and tips
+Some projects and code which are practiced and wrote by myself will be posted here 
