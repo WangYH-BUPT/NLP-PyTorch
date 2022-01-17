@@ -12,11 +12,11 @@ Word2Vec是2013年由Tomas Mikolov提出的，其核心思想是用一个词的�
 
 **1.2 网络结构：** 三层神经网络，输入层、中间层、输出层。
 
-***1.2.1 输入层：*** 输入矩阵`training\_input`的每一行是中心词的one-hot编码，因此每一行的维度是词典去重后的长度`vocab\_size`。
+***1.2.1 输入层：*** 输入矩阵`training_input`的每一行是中心词的one-hot编码，因此每一行的维度是词典去重后的长度`vocab_size`。
 
 	size(training_input) = [batch_size, vocab_size]
 
-***1.2.2 中间层：*** 权重矩阵`W`和输入矩阵`training\_input`相乘，得到每一个单词的词嵌入向量（为了前后统一，这里叫`hidden`）。
+***1.2.2 中间层：*** 权重矩阵`W`和输入矩阵`training_input`相乘，得到每一个单词的词嵌入向量（为了前后统一，这里叫`hidden`）。
 
 	hidden = training_input * W
 	size(W) = [vocab_size, word_embedding_dim]
