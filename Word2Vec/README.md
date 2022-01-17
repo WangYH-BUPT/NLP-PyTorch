@@ -32,11 +32,11 @@ $$ P(w_{t-1}, w_{t+1}|w_t) = P(w_{t-1}|w_t)P(w_{t+1}|w_t)$$
 
 利用交叉熵误差函数。我们希望损失函数值最小：
 
-$$ L=-\rm{log}P(w_{t-1}, w_{t+1}|w_t)=-\rm{log}P(w_{t-1}|w_t)P(w_{t+1}|w_t)=-(\rm{log}P(w_{t-1}|w_t)+\rm{log}P(w_{t+1}|w_t)) $$
+$$ L=-{\rm log}P(w_{t-1}, w_{t+1}|w_t)=-{\rm log}P(w_{t-1}|w_t)P(w_{t+1}|w_t)=-({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{t+1}|w_t)) $$
 
 扩展到整个语料库，则损失函数可以表示为：
 
-$$L=-\frac{1}{T}\Sigma^T_{t=1}(\rm{log}P(w_{t-1}|w_t)+\rm{log}P(w_{t+1}|w_t))$$
+$$L=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{t+1}|w_t))$$
 
 	import torch.nn as nn
 	device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
