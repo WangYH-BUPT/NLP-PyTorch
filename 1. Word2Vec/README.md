@@ -28,7 +28,7 @@ Word2Vec是2013年由Tomas Mikolov提出的，其核心思想是用一个词的�
 	size(V) = [word_embedding_dim, vocab_size]
 	size(output) = [batch_size, vocab_size]
 
-***1.2.4 损失函数：*** 在Skip-gram中，我们的目的是由中心词$w_t$去预测窗口内的上下文词w_{t-1}和w_{t+1}，此时，可以建模为：
+***1.2.4 损失函数：*** 在Skip-gram中，我们的目的是由中心词$w_t$去预测窗口内的上下文词w\_{t-1}和w_{t+1}，此时，可以建模为：
 
 $$ P(w_{t-1}, w_{t+1}|w_t) = P(w_{t-1}|w_t)P(w_{t+1}|w_t)$$
 
