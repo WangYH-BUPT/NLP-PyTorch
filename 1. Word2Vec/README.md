@@ -109,7 +109,7 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 	dataset = Data.TensorDataset(input_data, output_data)
 	loader = Data.DataLoader(dataset, batch_size, True)
 
-***1.3.6 构建网络结构：***
+***1.3.7 构建网络结构：***
 
 	class Word2Vec(nn.Module):
     	def __init__(self):
@@ -126,7 +126,7 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 	loss_fn = nn.CrossEntropyLoss().to(device)
 	optim = optimizer.Adam(model.parameters(), lr=1e-3)
 
-***1.3.7 迭代训练：***
+***1.3.8 迭代训练：***
 
 	for epoch in range(2000):
     	for i, (batch_x, batch_y) in enumerate(loader):
@@ -142,7 +142,7 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
         	loss.backward()
         	optim.step()
 
-***1.3.8 可视化（画图）：***
+***1.3.9 可视化（画图）：***
 
 	for i, label in enumerate(vocab):
     	W, WT = model.parameters()
