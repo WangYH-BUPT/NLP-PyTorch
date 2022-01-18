@@ -1,6 +1,6 @@
 # Word2Vec
 
-Word2Vec是2013年由Tomas Mikolov提出的，其核心思想是用一个词的上下文来刻画这个词。Word2Vec可以分为两种不同的模型：**Skip-gram**和**CBOW**模型。
+Word2Vec是2013年由Tomas Mikolov提出的，其核心思想是用一个词的上下文来刻画这个词。Word2Vec可以分为两种不同的模型：**Skip-gram** 和 **CBOW** 模型。
 
 ---
 
@@ -12,23 +12,23 @@ Word2Vec是2013年由Tomas Mikolov提出的，其核心思想是用一个词的�
 
 **1.2 网络结构：** 三层神经网络，输入层、中间层、输出层。
 
-***1.2.1 输入层：*** 输入矩阵`training_input`的每一行是中心词的one-hot编码，因此每一行的维度是词典去重后的长度`vocab_size`。
+***1.2.1 输入层：*** 输入矩阵 `training_input` 的每一行是中心词的one-hot编码，因此每一行的维度是词典去重后的长度 `vocab_size`。
 
 	size(training_input) = [batch_size, vocab_size]
-
-***1.2.2 中间层：*** 权重矩阵`W`和输入矩阵`training_input`相乘，得到每一个单词的词嵌入向量（为了前后统一，这里叫`hidden`）。
+ 
+***1.2.2 中间层：*** 权重矩阵 `W` 和输入矩阵 `training_input` 相乘，得到每一个单词的词嵌入向量（为了前后统一，这里叫 `hidden` ）。
 
 	hidden = training_input * W
 	size(W) = [vocab_size, word_embedding_dim]
 	size(hidden) = [batch_size, word_embedding_dim]
 
-***1.2.3 输出层：*** 词嵌入向量`hidden`和权重矩阵`V`相乘，得到输出上下文词的类别`output`，也就是在vocab中的索引，因此，每一行的维度是词典的维度，预测的是哪个词，就产生一个对应`vocab_size`大小的one-hot行矩阵。
+***1.2.3 输出层：*** 词嵌入向量 `hidden` 和权重矩阵 `V` 相乘，得到输出上下文词的类别 `output`，也就是在 vocab 中的索引，因此，每一行的维度是词典的维度，预测的是哪个词，就产生一个对应 `vocab_size` 大小的 one-hot 行矩阵。
 
 	output = hidden * V
 	size(V) = [word_embedding_dim, vocab_size]
 	size(output) = [batch_size, vocab_size]
 
-***1.2.4 损失函数：*** 在Skip-gram中，我们的目的是由中心词$w_t$去预测窗口内的上下文词w\_{t-1}和w_{t+1}，此时，可以建模为：
+***1.2.4 损失函数：*** 在 Skip-gram 中，我们的目的是由中心词 $w_t$ 去预测窗口内的上下文词 $w_{t-1}$ 和 $w_{t+1}$，此时，可以建模为：
 
 $$ P(w_{t-1}, w_{t+1}|w_t) = P(w_{t-1}|w_t)P(w_{t+1}|w_t)$$
 
@@ -57,7 +57,7 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 	import torch.utils.data as Data
 	import matplotlib.pyplot as plt
 
-***1.3.2 在GPU上运行：***
+***1.3.2 在 GPU 上运行：***
 
 	device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 	dtype = torch.FloatTensor
@@ -93,7 +93,7 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
         	skip_grams.append([center_word2idx, w])
 			# len(skip_gram): 168 = (len(sentences_list) - window_size*2) * window_size*2 = (46 - 2*2) * 2*2
 
-***1.3.6 将input_data和output_data赋值，并构建dataset和loader：***
+***1.3.6 将 input\_data 和 output\_data 赋值，并构建 dataset 和 loader：***
 
 	def make_data(skip_grams):
     	input_data = []  # input is one-hot code
@@ -159,6 +159,12 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 
 $$ L_{CBOW} = -\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_t|w_{t-1}, w_{t+1})$$
 
-通过对比$L_{skipgram}$和$L_{CBOW}$，我们应该使用skip-gram模型这是因为，从单词的分布式表示的准确度来看，在大多数情况下，skip-gram模型的结果更好。特别是随着语料库规模的增大，在低频词和类推问题的性能方面，skip-gram模型往往会有更好的表现。此外，就学习速度而言，CBOW模型比skip-gram模型要快。这是因为skip-gram模型需要根据上下文数量计算相应个数的损失，计算成本变大。
+通过对比$L_{skipgram}$和$L_{CBOW}$，我们应该使用 skip-gram 模型这是因为，从单词的分布式表示的准确度来看，在大多数情况下，skip-gram 模型的结果更好。特别是随着语料库规模的增大，在低频词和类推问题的性能方面，skip-gram模型往往会有更好的表现。此外，就学习速度而言，CBOW 模型比 skip-gram 模型要快。这是因为 skip-gram 模型需要根据上下文数量计算相应个数的损失，计算成本变大。
 
-CBOW实现不再阐述。
+CBOW 实现不再阐述。
+
+---
+
+# 扩展
+
+不管是 skip-gram 还是 CBOW
