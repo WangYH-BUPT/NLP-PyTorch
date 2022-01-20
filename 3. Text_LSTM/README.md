@@ -194,4 +194,4 @@
 
 ##
 
-4.torch.LSTM、torch.RNN、torch.GRU都在 rnn.py 文件中，之后会将源码的分析放在这个父目录下。
+4.torch.LSTM、torch.RNN、torch.GRU都在 rnn.py 文件中，之后会将源码的分析放出。
