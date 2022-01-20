@@ -88,7 +88,7 @@
 	dataset = Data.TensorDataset(input_batch, target_batch)
 	loader = Data.DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
 
-***1.3.6 构建网络结构：***
+***1.3.6 构建一层RNN网络结构：***
 
 	# Construct RNN
 	class TextRNN(nn.Module):
