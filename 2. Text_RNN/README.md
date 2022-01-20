@@ -104,7 +104,7 @@
         	# torch要求的X是: [seq_len, batch_size, word2vec]
         	# 我们的X是: [batch_size, n_step, n_class]
         	X = X.transpose(0, 1)  # X: [batch_size, n_step, n_class] --> [n_step, batch_size, n_class]
-        	out, hidden = self.rnn(X, hidden)
+        	out, hidden = self.rnn(X, hidden)  # out, _ = self.rnn(X, hidden) 
         	# hidden: [num_of_layers(1层RNN) * num_directions(=1), batch_size, hidden_size]
         	# out: [seq_len, batch_size, hidden_size]
         	out = out[-1]
