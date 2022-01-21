@@ -3,4 +3,4 @@ Some projects and code which are practiced and wrote by myself will be posted he
 1. Word2Vec
 2. Text_RNN
 3. Text_LSTM
-4. Bi-LSTM
+4. Text_BiLSTM
