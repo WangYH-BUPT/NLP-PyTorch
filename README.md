@@ -2,7 +2,7 @@
 
 Some projects and code which are practiced and wrote by myself will be posted here (Continually updated)
 
-Code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
+Code by Tae Hwan Jung, **modify and analysis by WangYH-BUPT**
 
 1. Word2Vec;   
 2. Text_RNN;    
