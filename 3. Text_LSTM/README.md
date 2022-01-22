@@ -70,10 +70,10 @@
 	def make_data(seq_data):
     	input_batch, target_batch = [], []
     	for seq in seq_data:
-        	input = [word2idx[n] for n in seq[:-1]]  # 'm', 'a' , 'k' is input
-        	target = word2idx[seq[-1]]  # 'e' is target
-        	input_batch.append(np.eye(n_class)[input])
-        	target_batch.append(target)
+			input = [word2idx[n] for n in seq[:-1]]  # 'm', 'a' , 'k' is input
+			target = word2idx[seq[-1]]  # 'e' is target
+			input_batch.append(np.eye(n_class)[input])
+			target_batch.append(target)
     	return torch.Tensor(input_batch), torch.LongTensor(target_batch)
 
 	input_batch, target_batch = make_data(seq_data)
@@ -85,19 +85,19 @@
 	# Construct LSTM
 	class TextLSTM(nn.Module):
     	def __init__(self):
-        	super(TextLSTM, self).__init__()
-        	self.lstm = nn.LSTM(input_size=n_class, hidden_size=n_hidden)  # 1 layer LSTM, so num_layer = num_directions = 1
-        	self.fc = nn.Linear(n_hidden, n_class)
+			super(TextLSTM, self).__init__()
+			self.lstm = nn.LSTM(input_size=n_class, hidden_size=n_hidden)  # 1 layer LSTM, so num_layer = num_directions = 1
+			self.fc = nn.Linear(n_hidden, n_class)
 
     	def forward(self, input_data):
-        	batch_size = input_data.shape[0]
-        	input_lstm = input_data.transpose(0, 1)  # [batch_size, n_step, n_class] --> [n_step, batch_size, n_class]
-        	hidden_state = torch.zeros(1, batch_size, n_hidden)  # [num_layers * num_directions, batch_size, n_hidden]
-        	cell_state = torch.zeros(1, batch_size, n_hidden)  # [num_layers * num_directions, batch_size, n_hidden]
-        	outputs, (_, _) = self.lstm(input_lstm, (hidden_state, cell_state))
-        	outputs = outputs[-1]  # [batch_size, n_hidden]
-        	TextLSTM_model = self.fc(outputs)
-        	return TextLSTM_model
+			batch_size = input_data.shape[0]
+			input_lstm = input_data.transpose(0, 1)  # [batch_size, n_step, n_class] --> [n_step, batch_size, n_class]
+			hidden_state = torch.zeros(1, batch_size, n_hidden)  # [num_layers * num_directions, batch_size, n_hidden]
+			cell_state = torch.zeros(1, batch_size, n_hidden)  # [num_layers * num_directions, batch_size, n_hidden]
+			outputs, (_, _) = self.lstm(input_lstm, (hidden_state, cell_state))
+			outputs = outputs[-1]  # [batch_size, n_hidden]
+			TextLSTM_model = self.fc(outputs)
+			return TextLSTM_model
 
 	model = TextLSTM()
 	loss_fn = nn.CrossEntropyLoss()
@@ -108,14 +108,14 @@
 	# Training
 	for epoch in range(1000):
     	for input_data, target_data in loader:
-        	predict_data = model(input_data)
-        	loss = loss_fn(predict_data, target_data)
-        	if (epoch + 1) % 100 == 0:
-            	print('Epoch:', '%04d' % (epoch + 1), 'cost =', '{:.6f}'.format(loss))
+			predict_data = model(input_data)
+			loss = loss_fn(predict_data, target_data)
+			if (epoch + 1) % 100 == 0:
+				print('Epoch:', '%04d' % (epoch + 1), 'cost =', '{:.6f}'.format(loss))
             
-        	optimizer.zero_grad()
-        	loss.backward()
-        	optimizer.step()
+			optimizer.zero_grad()
+			loss.backward()
+			optimizer.step()
 
 ***1.3.8 预测结果：***
 
