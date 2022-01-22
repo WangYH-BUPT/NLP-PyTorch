@@ -1,5 +1,5 @@
 """
-TextRNN
+TextRNN  # code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
 1. Python 3.6+
 2. Torch 1.2.0+
 """
