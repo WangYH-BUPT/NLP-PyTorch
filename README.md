@@ -4,7 +4,8 @@ Some projects and code which are practiced and wrote by myself will be posted he
 
 Code by Tae Hwan Jung, **modify and analysis by WangYH-BUPT**
 
-Contents:
+### Contents:
+
 1. Word2Vec;   
 2. Text_RNN;    
 3. Text_LSTM;    
