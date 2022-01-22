@@ -1,5 +1,5 @@
 """
-Word2Vec, skip-gram
+Word2Vec, skip-gram  # code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
 Paper: Distributed Representations of Words and Phrases and their Compositionality
 - Python 3.6+
 - Torch 1.2.0+
