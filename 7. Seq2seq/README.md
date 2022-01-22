@@ -186,14 +186,14 @@
 
 	# Seq2seq model (use RNN)
 	class Seq2seq(nn.Module):
-    	def __init__(self):
-        	super(Seq2seq, self).__init__()
-        	self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
-        	self.decoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # decoder
+    		def __init__(self):
+        		super(Seq2seq, self).__init__()
+        		self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
+        		self.decoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # decoder
 			...
 
-    	def forward(self, encoder_input, encoder_hidden, decoder_input):
-        	_, h_t = self.encoder(encoder_input, encoder_hidden)  # RNN 两输入两输出
+    		def forward(self, encoder_input, encoder_hidden, decoder_input):
+        		_, h_t = self.encoder(encoder_input, encoder_hidden)  # RNN 两输入两输出
 			...
 			return model
 
@@ -211,23 +211,23 @@
 	def translate(word):
 		...
 		output = model(encoder_input, hidden, decoder_input)
-    	output = output.transpose(0, 1)  # [n_step+1, batch_size, n_class]
+    		output = output.transpose(0, 1)  # [n_step+1, batch_size, n_class]
 		...
 
 **1.2** `batch_first=False`	
 
 	# Seq2seq model (use RNN)
 	class Seq2seq(nn.Module):
-    	def __init__(self):
-        	super(Seq2seq, self).__init__()
-        	self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
-        	self.decoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # decoder
+    		def __init__(self):
+			super(Seq2seq, self).__init__()
+			self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
+			self.decoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # decoder
 			...
 
-    	def forward(self, encoder_input, encoder_hidden, decoder_input):
+    		def forward(self, encoder_input, encoder_hidden, decoder_input):
 			encoder_input = encoder_input.transpose(0, 1)  # --> [n_step+1, batch_size, n_class]
-        	decoder_input = decoder_input.transpose(0, 1)  # --> [n_step+1, batch_size, n_class]
-        	_, h_t = self.encoder(encoder_input, encoder_hidden)  # RNN 两输入两输出
+        		decoder_input = decoder_input.transpose(0, 1)  # --> [n_step+1, batch_size, n_class]
+        		_, h_t = self.encoder(encoder_input, encoder_hidden)  # RNN 两输入两输出
 			...
 			return model
 
