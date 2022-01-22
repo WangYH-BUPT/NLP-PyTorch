@@ -10,3 +10,9 @@ Code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
 4. Text_BiLSTM;    
 5. Text_CNN;    
 6. NNLM;
+7. Seq2Seq;
+8. Seq2Seq(Attention); 
+9. Bi-LSTM(Attention);
+10. Transformer;
+11. BERT;
+12. Analysis of other NLP_demo project.
