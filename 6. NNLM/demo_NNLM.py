@@ -1,5 +1,5 @@
 """
-NNLM(Neural Network Language Model)
+NNLM(Neural Network Language Model)  # code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
 Paper: A Neural Probabilistic Language Model(2003)
 1. Python 3.6+
 2. Torch 1.2.0+
