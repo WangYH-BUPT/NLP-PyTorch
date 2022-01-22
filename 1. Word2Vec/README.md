@@ -90,8 +90,8 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
     	context_word2idx = [word2idx[sentences_list[i]] for i in context_idx]
 
     	for w in context_word2idx:
-        	skip_grams.append([center_word2idx, w])
-			# len(skip_gram): 168 = (len(sentences_list) - window_size*2) * window_size*2 = (46 - 2*2) * 2*2
+			skip_grams.append([center_word2idx, w])
+				# len(skip_gram): 168 = (len(sentences_list) - window_size*2) * window_size*2 = (46 - 2*2) * 2*2
 
 ***1.3.6 将 input\_data 和 output\_data 赋值，并构建 dataset 和 loader：***
 
@@ -100,8 +100,8 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
     	output_data = []  # output is a class
 
     	for center_one_hot, context_class in skip_grams:
-        	input_data.append(np.eye(vocab_size)[center_one_hot])
-        	output_data.append(context_class)
+        		input_data.append(np.eye(vocab_size)[center_one_hot])
+        		output_data.append(context_class)
     	return input_data, output_data
 
 	input_data, output_data = make_data(skip_grams)  # instantiate
@@ -113,30 +113,30 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 
 	class Word2Vec(nn.Module):
     	def __init__(self):
-        	super(Word2Vec, self).__init__()
-        	self.W = nn.Parameter(torch.randn(vocab_size, word_embedding_dim).type(dtype))
-        	self.V = nn.Parameter(torch.randn(word_embedding_dim, vocab_size).type(dtype))
+        		super(Word2Vec, self).__init__()
+        		self.W = nn.Parameter(torch.randn(vocab_size, word_embedding_dim).type(dtype))
+        		self.V = nn.Parameter(torch.randn(word_embedding_dim, vocab_size).type(dtype))
 
     	def forward(self, training_input):  # training_input: [batch_size, vocab_size], each line is one-hot code
-        	hidden = torch.mm(training_input, self.W)  # [batch_size, word_embedding_dim]
-        	output = torch.mm(hidden, self.V)  # [batch_size, vocab_size], class_num = vocab_size
-        	return output
+        		hidden = torch.mm(training_input, self.W)  # [batch_size, word_embedding_dim]
+        		output = torch.mm(hidden, self.V)  # [batch_size, vocab_size], class_num = vocab_size
+        		return output
 
-	model = Word2Vec().to(device)
-	loss_fn = nn.CrossEntropyLoss().to(device)
-	optim = optimizer.Adam(model.parameters(), lr=1e-3)
+			model = Word2Vec().to(device)
+			loss_fn = nn.CrossEntropyLoss().to(device)
+			optim = optimizer.Adam(model.parameters(), lr=1e-3)
 
 ***1.3.8 迭代训练：***
 
 	for epoch in range(2000):
     	for i, (batch_x, batch_y) in enumerate(loader):
-        	batch_x = batch_x.to(device)
-        	batch_y = batch_y.to(device)
-        	predict = model(batch_x)
-        	loss = loss_fn(predict, batch_y)
+        		batch_x = batch_x.to(device)
+        		batch_y = batch_y.to(device)
+        		predict = model(batch_x)
+        		loss = loss_fn(predict, batch_y)
 
-        	if (epoch + 1) % 1000 == 0:
-            	print("epoch =", epoch + 1, i, "loss =", loss.item())
+        		if (epoch + 1) % 1000 == 0:
+            		print("epoch =", epoch + 1, i, "loss =", loss.item())
 
         	optim.zero_grad()
         	loss.backward()
@@ -149,7 +149,7 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
     	x, y = float(W[i][0]), float(W[i][1])
     	plt.scatter(x, y)
     	plt.annotate(label, xy=(x, y), xytext=(5, 2), textcoords='offset points', ha='right', va='bottom')
-	plt.show()
+		plt.show()
 
 ---
 
