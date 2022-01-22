@@ -13,14 +13,14 @@
 ***1.2.1 Encoder 层：*** 输入矩阵 `input_data` 通过 `nn.Embedding` 进行词嵌入：
 
 	class Seq2seq(nn.Module):
-    	def __init__(self):
-        	...
-        	self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
-   			...
-
-    	def forward(self, encoder_input, encoder_hidden, decoder_input):
-        	_, h_t = self.encoder(encoder_input, encoder_hidden)  # RNN 两输入两输出
-        	...
+		def __init__(self):
+			...
+			self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
+			...
+		
+		def forward(self, encoder_input, encoder_hidden, decoder_input):
+			_, h_t = self.encoder(encoder_input, encoder_hidden)  # RNN 两输入两输出
+			...
  
 ***1.2.2 Decoder 层：*** 
 
@@ -186,10 +186,10 @@
 
 	# Seq2seq model (use RNN)
 	class Seq2seq(nn.Module):
-    	def __init__(self):
-        	super(Seq2seq, self).__init__()
-        	self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
-        	self.decoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # decoder
+    		def __init__(self):
+        		super(Seq2seq, self).__init__()
+        		self.encoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # encoder
+        		self.decoder = nn.RNN(batch_first=True, input_size=n_class, hidden_size=n_hidden, dropout=0.5)  # decoder
 			...
 
     	def forward(self, encoder_input, encoder_hidden, decoder_input):
