@@ -65,9 +65,9 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 ***1.3.3 构建语料库：***
 
 	sentences = ["jack like dog", "jack like cat", "jack like animal",
-               "dog cat animal", "banana apple cat dog like", "dog fish milk like",
-               "dog cat animal like", "jack like apple", "apple like", "jack like banana",
-               "apple banana jack movie book music like", "cat dog hate", "cat dog like"]
+                 "dog cat animal", "banana apple cat dog like", "dog fish milk like",
+                 "dog cat animal like", "jack like apple", "apple like", "jack like banana",
+                 "apple banana jack movie book music like", "cat dog hate", "cat dog like"]
 	sentences_list = " ".join(sentences).split()  # 分割句子为单词
 	vocab = set(sentences_list)  # 构建语料库set
 	word2idx = {word: idx for idx, word in enumerate(vocab)}  # word到idx的映射：{'jack': 0, 'like': 1, ...}
@@ -100,8 +100,8 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
     	output_data = []  # output is a class
 
     	for center_one_hot, context_class in skip_grams:
-        		input_data.append(np.eye(vocab_size)[center_one_hot])
-        		output_data.append(context_class)
+        	input_data.append(np.eye(vocab_size)[center_one_hot])
+        	output_data.append(context_class)
     	return input_data, output_data
 
 	input_data, output_data = make_data(skip_grams)  # instantiate
@@ -113,30 +113,30 @@ $$L_{skipgram}=-\frac{1}{T}\Sigma^T_{t=1}({\rm log}P(w_{t-1}|w_t)+{\rm log}P(w_{
 
 	class Word2Vec(nn.Module):
     	def __init__(self):
-        		super(Word2Vec, self).__init__()
-        		self.W = nn.Parameter(torch.randn(vocab_size, word_embedding_dim).type(dtype))
-        		self.V = nn.Parameter(torch.randn(word_embedding_dim, vocab_size).type(dtype))
+        	super(Word2Vec, self).__init__()
+        	self.W = nn.Parameter(torch.randn(vocab_size, word_embedding_dim).type(dtype))
+        	self.V = nn.Parameter(torch.randn(word_embedding_dim, vocab_size).type(dtype))
 
     	def forward(self, training_input):  # training_input: [batch_size, vocab_size], each line is one-hot code
-        		hidden = torch.mm(training_input, self.W)  # [batch_size, word_embedding_dim]
-        		output = torch.mm(hidden, self.V)  # [batch_size, vocab_size], class_num = vocab_size
-        		return output
+        	hidden = torch.mm(training_input, self.W)  # [batch_size, word_embedding_dim]
+        	output = torch.mm(hidden, self.V)  # [batch_size, vocab_size], class_num = vocab_size
+        	return output
 
-			model = Word2Vec().to(device)
-			loss_fn = nn.CrossEntropyLoss().to(device)
-			optim = optimizer.Adam(model.parameters(), lr=1e-3)
+	model = Word2Vec().to(device)
+	loss_fn = nn.CrossEntropyLoss().to(device)
+	optim = optimizer.Adam(model.parameters(), lr=1e-3)
 
 ***1.3.8 迭代训练：***
 
 	for epoch in range(2000):
     	for i, (batch_x, batch_y) in enumerate(loader):
-        		batch_x = batch_x.to(device)
-        		batch_y = batch_y.to(device)
-        		predict = model(batch_x)
-        		loss = loss_fn(predict, batch_y)
+        	batch_x = batch_x.to(device)
+        	batch_y = batch_y.to(device)
+        	predict = model(batch_x)
+        	loss = loss_fn(predict, batch_y)
 
-        		if (epoch + 1) % 1000 == 0:
-            		print("epoch =", epoch + 1, i, "loss =", loss.item())
+        	if (epoch + 1) % 1000 == 0:
+            	print("epoch =", epoch + 1, i, "loss =", loss.item())
 
         	optim.zero_grad()
         	loss.backward()
