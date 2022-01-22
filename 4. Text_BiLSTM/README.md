@@ -68,18 +68,18 @@
 
 	# dataset, dataloader
 	def make_data(sentence):
-    input_batch = []
-    target_batch = []
-    for i in range(max_len - 1):
-        input = [word2idx[n] for n in words[:(i + 1)]]
-        input = input + [0] * (max_len - len(input))
-        # i = 0: input = [idx(Github), 0, 0, ..., 0] (21-1个0)
-        # i = 1: input = [idx(Github), idx(Actions), 0, 0, ..., 0] (21-2个0)
-        # 多个0只是用来占位，也可以用其他的表示，例如: 'UNK'_idx = max_len + 1。这里可以理解成transformer中的mask
-        target = word2idx[words[i + 1]]
-        input_batch.append(np.eye(n_class)[input])  # 每一行是Github、Actions、...对应的one-hot编码
-        target_batch.append(target)
-    return torch.Tensor(input_batch), torch.LongTensor(target_batch)
+	    input_batch = []
+	    target_batch = []
+	    for i in range(max_len - 1):
+		input = [word2idx[n] for n in words[:(i + 1)]]
+		input = input + [0] * (max_len - len(input))
+		# i = 0: input = [idx(Github), 0, 0, ..., 0] (21-1个0)
+		# i = 1: input = [idx(Github), idx(Actions), 0, 0, ..., 0] (21-2个0)
+		# 多个0只是用来占位，也可以用其他的表示，例如: 'UNK'_idx = max_len + 1。这里可以理解成transformer中的mask
+		target = word2idx[words[i + 1]]
+		input_batch.append(np.eye(n_class)[input])  # 每一行是Github、Actions、...对应的one-hot编码
+		target_batch.append(target)
+	    return torch.Tensor(input_batch), torch.LongTensor(target_batch)
 
 	input_batch, target_batch = make_data(sentence)
 	# input_batch: [max_len - 1, max_len, n_class]; target_batch = [1, max_len - 1]
@@ -91,20 +91,20 @@
 	# BiLSTM
 	class BiLSTM(nn.Module):
     	def __init__(self):
-        	super(BiLSTM, self).__init__()
-        	self.lstm = nn.LSTM(batch_first=False, input_size=n_class, hidden_size=n_hidden, bidirectional=True)
-        	self.fc = nn.Linear(n_hidden * 2, n_class)
+			super(BiLSTM, self).__init__()
+			self.lstm = nn.LSTM(batch_first=False, input_size=n_class, hidden_size=n_hidden, bidirectional=True)
+			self.fc = nn.Linear(n_hidden * 2, n_class)
     
     	def forward(self, input_data):
-        	batch_size = input_data.shape[0]
-        	input_data = input_data.transpose(0, 1)  # [batch_size, max_len, n_class] --> [max_len, batch_size, n_class]
-        	hidden_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
-        	cell_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
+			batch_size = input_data.shape[0]
+			input_data = input_data.transpose(0, 1)  # [batch_size, max_len, n_class] --> [max_len, batch_size, n_class]
+			hidden_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
+			cell_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
 
-        	outputs, (_, _) = self.lstm(input_data, (hidden_state, cell_state))  # [max_len, batch_size, n_hidden * 2]
-        	outputs = outputs[-1]  # [batch_size, n_hidden * 2]
-        	model = self.fc(outputs)  # [batch_size, n_class]
-        return model
+			outputs, (_, _) = self.lstm(input_data, (hidden_state, cell_state))  # [max_len, batch_size, n_hidden * 2]
+			outputs = outputs[-1]  # [batch_size, n_hidden * 2]
+			model = self.fc(outputs)  # [batch_size, n_class]
+        		return model
 
 	model = BiLSTM()
 	loss_fn = nn.CrossEntropyLoss()
@@ -115,14 +115,14 @@
 	# Training
 	for epoch in range(5000):
     	for input_data, target_data in loader:
-        	predict_data = model(input_data)
-        	loss = loss_fn(predict_data, target_data)
-        	if (epoch + 1) % 1000 == 0:
-            	print('Epoch:', '%04d' % (epoch + 1), 'Loss =', '{:.6f}'.format(loss))
+			predict_data = model(input_data)
+			loss = loss_fn(predict_data, target_data)
+			if (epoch + 1) % 1000 == 0:
+				print('Epoch:', '%04d' % (epoch + 1), 'Loss =', '{:.6f}'.format(loss))
 
-        	optimizer.zero_grad()
-        	loss.backward()
-        	optimizer.step()
+			optimizer.zero_grad()
+			loss.backward()
+			optimizer.step()
 
 ***1.3.8 预测结果：***
 
@@ -143,38 +143,38 @@
 
 	class BiLSTM(nn.Module):
     	def __init__(self):
-        	super(BiLSTM, self).__init__()
-        	self.lstm = nn.LSTM(batch_first=False, input_size=n_class, hidden_size=n_hidden, bidirectional=True)
-        	self.fc = nn.Linear(n_hidden * 2, n_class)
+			super(BiLSTM, self).__init__()
+			self.lstm = nn.LSTM(batch_first=False, input_size=n_class, hidden_size=n_hidden, bidirectional=True)
+			self.fc = nn.Linear(n_hidden * 2, n_class)
     
     	def forward(self, input_data):
-        	batch_size = input_data.shape[0]
-        	input_data = input_data.transpose(0, 1)  # [batch_size, max_len, n_class] --> [max_len, batch_size, n_class]
-        	hidden_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
-        	cell_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
+			batch_size = input_data.shape[0]
+			input_data = input_data.transpose(0, 1)  # [batch_size, max_len, n_class] --> [max_len, batch_size, n_class]
+			hidden_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
+			cell_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
 
-        	outputs, (_, _) = self.lstm(input_data, (hidden_state, cell_state))  # [max_len, batch_size, n_hidden * 2]
-        	outputs = outputs[-1]  # [batch_size, n_hidden * 2]
-        	model = self.fc(outputs)  # [batch_size, n_class]
-        	return model
+			outputs, (_, _) = self.lstm(input_data, (hidden_state, cell_state))  # [max_len, batch_size, n_hidden * 2]
+			outputs = outputs[-1]  # [batch_size, n_hidden * 2]
+			model = self.fc(outputs)  # [batch_size, n_class]
+			return model
 
 ***1.2 batch_first=False***
 
 	class BiLSTM(nn.Module):
     	def __init__(self):
-        	super(BiLSTM, self).__init__()
-        	self.lstm = nn.LSTM(batch_first=True, input_size=n_class, hidden_size=n_hidden, bidirectional=True)
-        	self.fc = nn.Linear(n_hidden * 2, n_class)
+			super(BiLSTM, self).__init__()
+			self.lstm = nn.LSTM(batch_first=True, input_size=n_class, hidden_size=n_hidden, bidirectional=True)
+			self.fc = nn.Linear(n_hidden * 2, n_class)
     
     	def forward(self, input_data):
-        	batch_size = input_data.shape[0]
-        	hidden_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
-        	cell_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
+			batch_size = input_data.shape[0]
+			hidden_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
+			cell_state = torch.zeros(1*2, batch_size, n_hidden)  # [num_layer * num_directions, batch_size, n_hidden]
 
-        	outputs, (_, _) = self.lstm(input_data, (hidden_state, cell_state))  # [batch_size, max_len, n_hidden * 2]
-        	outputs = outputs[:, -1]  # [batch_size, n_hidden * 2]
-        	model = self.fc(outputs)  # [batch_size, n_class]
-        	return model
+			outputs, (_, _) = self.lstm(input_data, (hidden_state, cell_state))  # [batch_size, max_len, n_hidden * 2]
+			outputs = outputs[:, -1]  # [batch_size, n_hidden * 2]
+			model = self.fc(outputs)  # [batch_size, n_class]
+			return model
 
 
 经过对比，`batch_first = True` 比 `batch_first = False` **处理速度要快**，同时**网上很多地方**都在说 `batch_first = False` **性能更好**。 ***1.1*** 和 ***1.2***：
