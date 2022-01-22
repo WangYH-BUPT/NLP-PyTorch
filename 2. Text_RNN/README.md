@@ -70,17 +70,17 @@
     	target_batch = []
 
     	for sen in sentences:
-        	word = sen.split()  # Take each sentence as a unit, extract words
-        	input = [word2idx[n] for n in word[: -1]]  # Traverse the first word to the penultimate word of each sentence
-        	target = word2idx[word[-1]]  # the last word of each sentence
+			word = sen.split()  # Take each sentence as a unit, extract words
+			input = [word2idx[n] for n in word[: -1]]  # Traverse the first word to the penultimate word of each sentence
+			target = word2idx[word[-1]]  # the last word of each sentence
 
-        	input_batch.append(np.eye(n_class)[input])
-        	target_batch.append(target)
-        	"""
-        	print(np.eye(5)[[0, 2]])  # 单位矩阵的第0行、第2行取出来
-        	[[1. 0. 0. 0. 0.]
-         	[0. 0. 1. 0. 0.]]
-        	"""
+			input_batch.append(np.eye(n_class)[input])
+			target_batch.append(target)
+			"""
+			print(np.eye(5)[[0, 2]])  # 单位矩阵的第0行、第2行取出来
+			[[1. 0. 0. 0. 0.]
+			[0. 0. 1. 0. 0.]]
+			"""
     	return input_batch, target_batch
 
 	input_batch, target_batch = make_data(sentences)  # input_batch: [num(sentences), n_step, n_class] (here: [3, 2, 7])
@@ -93,23 +93,23 @@
 	# Construct RNN
 	class TextRNN(nn.Module):
     	def __init__(self):
-        	super(TextRNN, self).__init__()
-        	self.rnn = nn.RNN(input_size=n_class, hidden_size=n_hidden)  # 7-dim(n_class) --> 5-dim(n_hidden)
-        	# !input_size and hidden_size are essential parameters in nn.RNN
-        	# !input_size is n-dim vector encoding of each word. (Here is one-hot, so 7-dim vector is represented each word)
-        	# !hidden_size is the hidden dimension through RNN
-        	self.fc = nn.Linear(n_hidden, n_class)
+			super(TextRNN, self).__init__()
+			self.rnn = nn.RNN(input_size=n_class, hidden_size=n_hidden)  # 7-dim(n_class) --> 5-dim(n_hidden)
+			# !input_size and hidden_size are essential parameters in nn.RNN
+			# !input_size is n-dim vector encoding of each word. (Here is one-hot, so 7-dim vector is represented each word)
+			# !hidden_size is the hidden dimension through RNN
+			self.fc = nn.Linear(n_hidden, n_class)
 
     	def forward(self, hidden, X):
-        	# torch要求的X是: [seq_len, batch_size, word2vec]
-        	# 我们的X是: [batch_size, n_step, n_class]
-        	X = X.transpose(0, 1)  # X: [batch_size, n_step, n_class] --> [n_step, batch_size, n_class]
-        	out, hidden = self.rnn(X, hidden)  # out, _ = self.rnn(X, hidden) 
-        	# hidden: [num_of_layers(1层RNN) * num_directions(=1), batch_size, hidden_size]
-        	# out: [seq_len, batch_size, hidden_size]
-        	out = out[-1]
-        	model = self.fc(out)
-        	return model
+			# torch要求的X是: [seq_len, batch_size, word2vec]
+			# 我们的X是: [batch_size, n_step, n_class]
+			X = X.transpose(0, 1)  # X: [batch_size, n_step, n_class] --> [n_step, batch_size, n_class]
+			out, hidden = self.rnn(X, hidden)  # out, _ = self.rnn(X, hidden) 
+			# hidden: [num_of_layers(1层RNN) * num_directions(=1), batch_size, hidden_size]
+			# out: [seq_len, batch_size, hidden_size]
+			out = out[-1]
+			model = self.fc(out)
+        		return model
 
 	model = TextRNN().to(device)
 	loss_fn = nn.CrossEntropyLoss().to(device)
@@ -120,18 +120,18 @@
 	# Training
 	for epoch in range(5000):
     	for input_data, output_data in loader:  # input_data: [batch_size, n_step, n_class]; output_data: [batch_size]
-        	input_data = input_data.to(device)
-        	output_data = output_data.to(device)
-        	hidden = torch.zeros(1, input_data.shape[0], n_hidden).to(device)
-        	predict = model(hidden, input_data)  # predict: [batch_size, n_class]
-        	loss = loss_fn(predict, output_data)
+			input_data = input_data.to(device)
+			output_data = output_data.to(device)
+			hidden = torch.zeros(1, input_data.shape[0], n_hidden).to(device)
+			predict = model(hidden, input_data)  # predict: [batch_size, n_class]
+			loss = loss_fn(predict, output_data)
 
-        	if (epoch + 1) % 1000 == 0:
-            	print('Epoch:', '%04d' % (epoch + 1), 'cost =', '{:.6f}'.format(loss))
+			if (epoch + 1) % 1000 == 0:
+				print('Epoch:', '%04d' % (epoch + 1), 'cost =', '{:.6f}'.format(loss))
 
-        	optimizer.zero_grad()
-        	loss.backward()
-        	optimizer.step()
+			optimizer.zero_grad()
+			loss.backward()
+			optimizer.step()
 
 ***1.3.8 预测结果：***
 
