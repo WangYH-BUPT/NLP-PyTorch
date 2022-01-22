@@ -4,7 +4,7 @@ Some projects and code which are practiced and wrote by myself will be posted he
 
 > Code by Tae Hwan Jung, **modify and analysis by WangYH-BUPT**
 
-> **Due to misalignment and other problems during the markdown compilation process of Github. Therefore, there will be typesetting problems in the markdown source code in all `README.md` files, and this typesetting is only to better present the content and correct code typesetting. Not an accidental typo! The process code in `README.md` is for reference only, mainly `.py` source code.**
+> **Due to problems such as misalignment during the compilation of Github's markdown. All `README.md` files will have typesetting problems, but this is not a fault of the markdown source code, so it can be compiled with local markdownpad by cloning to the local, and the result is correct! The process code in `README.md` is for reference only, mainly `.py` source code.**
 
 ### Contents:
 
