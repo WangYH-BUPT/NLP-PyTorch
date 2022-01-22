@@ -1,5 +1,5 @@
 """
-Text_CNN
+Text_CNN  # code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
 Paper: Convolutional Neural Networks for Sentence Classification (2014)
 1. Python 3.6+
 2. Torch 1.2.0+
