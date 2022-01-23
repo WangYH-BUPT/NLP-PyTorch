@@ -1,6 +1,8 @@
 # Seq2seq
 
-和 RNN、LSTM、CNN 不同，在 `Data.Dataset` 的构造上、计算 `loss` 值区别较大。关于每一步的矩阵维数变化，在 `1_layer_Seq2seq.pdf` 中体现。（稍后画完上传，先睡觉，命要紧）
+和 RNN、LSTM、CNN 不同，在 `Data.Dataset` 的构造上、计算 `loss` 值区别较大。关于每一步的矩阵维数变化，在 `1_layer_Seq2seq.pdf` 中体现。
+
+该 demo 中只是利用一个简单的例子比较形象的描述了 Seq2seq 的结构，但真正利用 Seq2seq 时需要注意 Encoder 和 Decoder 的工作机制是不同的。具体来讲， Encoder 的输入是确定的，已经放入 encoder_input 中，只是每个时刻处理每个时刻的encoder_input(i) 和 h_i。 Decoder 的第零时刻decoder_input(0): <SOS>，处理过后输出 decoder_output(0)，然后将 decoder_output(0) 当作 decoder_input(1)，进行第一个时刻的处理，输出 decoder_output(1)，反复这个过程，出来翻译或预测的结果。
 
 ##
 
