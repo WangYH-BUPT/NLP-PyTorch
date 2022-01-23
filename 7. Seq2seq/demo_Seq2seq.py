@@ -1,8 +1,8 @@
 """
-Seq2seq  # Code by Tae Hwan Jung(Jeff Jung) @graykode, modify by WangYH-BUPT
+Seq2seq  # Code by Tae Hwan Jung, modify and analysis by WangYH-BUPT
 Paper: Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation(2014)
 1. Python 3.6+
-2. Torch 1.2.0+  00'00  12'07
+2. Torch 1.2.0+ 
 """
 
 import torch
