@@ -1,4 +1,4 @@
-# NLP-demo-PyTorch
+# NLP-PyTorch
 
 Some projects and code which are practiced and wrote by myself will be posted here (Continually updated)
 
