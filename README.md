@@ -18,5 +18,4 @@ Some projects and code which are practiced and wrote by myself will be posted he
 8. Seq2Seq(Attention); 
 9. Bi-LSTM(Attention);
 10. Transformer;
-11. BERT;
-12. Analysis of other NLP_demo project.
+11. BERT.
