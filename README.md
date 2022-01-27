@@ -15,7 +15,6 @@ Some projects and code which are practiced and wrote by myself will be posted he
 5. Text_CNN;    
 6. NNLM;
 7. Seq2Seq;
-8. Seq2Seq(Attention); 
-9. Bi-LSTM(Attention);
-10. Transformer;
-11. BERT.
+8. Bi-LSTM(Attention);
+9. Transformer;
+10. BERT.
