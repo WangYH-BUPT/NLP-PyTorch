@@ -161,8 +161,7 @@ class MultiHeadAttention(nn.Module):
 
         # context: [batch_size, n_heads, len_q, d_v], attn: [batch_size, n_heads, len_q, len_k]
         context, attn = ScaledDotProductAttention()(Q, K, V, attn_mask)
-        context = context.transpose(1, 2).reshape(batch_size, -1,
-                                                  n_heads * d_v)  # context: [batch_size, len_q, n_heads * d_v]
+        context = context.transpose(1, 2).reshape(batch_size, -1, n_heads * d_v)  # context: [batch_size, len_q, n_heads * d_v]
         output = self.fc(context)  # [batch_size, len_q, d_model]
         return nn.LayerNorm(d_model).cuda()(output + residual), attn
 
@@ -196,8 +195,7 @@ class EncoderLayer(nn.Module):
         enc_self_attn_mask: [batch_size, src_len, src_len]
         """
         # enc_outputs: [batch_size, src_len, d_model], attn: [batch_size, n_heads, src_len, src_len]
-        enc_outputs, attn = self.enc_self_attn(enc_inputs, enc_inputs, enc_inputs,
-                                               enc_self_attn_mask)  # enc_inputs to same Q,K,V
+        enc_outputs, attn = self.enc_self_attn(enc_inputs, enc_inputs, enc_inputs, enc_self_attn_mask)  # enc_inputs to same Q,K,V
         enc_outputs = self.pos_ffn(enc_outputs)  # enc_outputs: [batch_size, src_len, d_model]
         return enc_outputs, attn
 
